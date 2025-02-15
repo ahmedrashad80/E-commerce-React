@@ -9,6 +9,9 @@ function PaginationComponent({ productDetails, addCart, search, searchValue }) {
   const { limit, products, totalPages, setTotalPages } =
     useContext(ProductContext);
   useEffect(() => {
+    setPage(1);
+  }, [searchValue]);
+  useEffect(() => {
     getProducts(page);
   }, [page, search]);
   function getProducts(page) {
@@ -35,8 +38,6 @@ function PaginationComponent({ productDetails, addCart, search, searchValue }) {
 
   const handleChange = (event, value) => {
     setPage(value);
-    // console.log(event);
-    // console.log(value);
   };
 
   return (
@@ -56,6 +57,7 @@ function PaginationComponent({ productDetails, addCart, search, searchValue }) {
 
       <div className="container m-5 d-flex justify-content-center">
         <Pagination
+          page={page}
           count={totalPages}
           variant="outlined"
           shape="rounded"
