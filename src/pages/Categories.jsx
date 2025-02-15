@@ -1,11 +1,14 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import ProductCard from "../components/ProductCard";
+import { useNavigate } from "react-router-dom";
+import { TokenContext } from "../context/TokenContext";
 
 function Categories() {
   const [catogories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [activeCategory, setActiveCategory] = useState("");
+  const { token } = useContext(TokenContext);
   async function getCategories() {
     try {
       const { data } = await axios.get(
@@ -36,6 +39,28 @@ function Categories() {
   useEffect(() => {
     getCategories();
   }, []);
+  const navigate = useNavigate();
+  const getDetails = (id) => {
+    navigate(`/product/${id}`);
+  };
+  const addToCart = (id) => {
+    if (!token) {
+      alert("Please login to add products to cart");
+      return;
+    }
+    const product = products.find((product) => product.id === id);
+
+    const isExist = cart.findIndex((product) => product.id === id);
+    if (isExist !== -1) {
+      setCart((prevCart) =>
+        prevCart.map((item) =>
+          item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+        )
+      );
+    } else {
+      setCart((prevCart) => [...prevCart, { ...product, quantity: 1 }]);
+    }
+  };
   return (
     <>
       <div className="container">
@@ -62,9 +87,9 @@ function Categories() {
           {products.map((product) => (
             <ProductCard
               product={product}
-              // changePrice={updatePrice}
-              // deleteProduct={removeProduct}
               key={product.id}
+              productDetails={getDetails}
+              addCart={addToCart}
             />
           ))}
         </div>
