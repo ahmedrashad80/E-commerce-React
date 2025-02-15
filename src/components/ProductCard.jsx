@@ -1,7 +1,10 @@
 function ProductCard({ product, productDetails, addCart }) {
   return (
     <>
-      <div className="col-md-3 my-3">
+      <div
+        className="col-12 col-sm-6 col-md-4 col-lg-3 my-3"
+        style={{ minWidth: "10rem" }}
+      >
         <div className="card h-100 shadow border-0 ">
           <img
             src={product.image}

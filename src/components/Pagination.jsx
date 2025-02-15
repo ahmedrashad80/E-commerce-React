@@ -42,7 +42,7 @@ function PaginationComponent({ productDetails, addCart, search, searchValue }) {
 
   return (
     <>
-      <div className="container px-5 mx-5">
+      <div className="container ">
         <div className="row">
           {productsLimits.map((product) => (
             <ProductCard
