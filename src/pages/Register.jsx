@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Register() {
   const [apiError, setApiError] = useState(null);
@@ -183,6 +183,9 @@ function Register() {
                 <h3 className=" text-danger m-2 text-center">*{apiError}</h3>
               )}
             </form>
+            <p className="text-center mt-3">
+              i already have account<Link to="/login">Login</Link>
+            </p>
           </div>
         </div>
       </div>

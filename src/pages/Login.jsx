@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { TokenContext } from "../context/TokenContext";
 function Login() {
   const [apiError, setApiError] = useState(null);
@@ -41,8 +41,11 @@ function Login() {
       }
     } catch (error) {
       console.error(error);
-      console.log(error.response.data);
-      setApiError(error.response.data.massage);
+      if (error.response && error.response.data) {
+        setApiError(error.response.data.massage);
+      } else {
+        setApiError(error.message);
+      }
     }
   }
   let loginForm = useFormik({
@@ -107,6 +110,9 @@ function Login() {
                 <h3 className=" text-danger m-2 text-center">*{apiError}</h3>
               )}
             </form>
+            <p className="text-center mt-3">
+              Don't have an account? <Link to="/register">Register</Link>
+            </p>
           </div>
         </div>
       </div>
